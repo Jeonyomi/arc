@@ -1,11 +1,17 @@
 import { z } from "zod";
 
 const envSchema = z.object({
-  DATABASE_URL: z.string().default(""),
+  DATABASE_URL: z
+    .string()
+    .optional()
+    .transform((v) => v?.trim() ?? ""),
   ARC_RPC_URL: z
     .string()
-    .transform((v) => v.trim())
-    .transform((v) => (v === "" ? "https://rpc.mainnet.arc.io" : v))
+    .optional()
+    .transform((v) => {
+      const trimmed = v?.trim() ?? "";
+      return trimmed === "" ? "https://rpc.mainnet.arc.io" : trimmed;
+    })
     .pipe(z.string().url()),
 });
 
