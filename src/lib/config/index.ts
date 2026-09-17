@@ -2,7 +2,11 @@ import { z } from "zod";
 
 const envSchema = z.object({
   DATABASE_URL: z.string().default(""),
-  ARC_RPC_URL: z.string().url().default("https://rpc.mainnet.arc.io"),
+  ARC_RPC_URL: z
+    .string()
+    .transform((v) => v.trim())
+    .transform((v) => (v === "" ? "https://rpc.mainnet.arc.io" : v))
+    .pipe(z.string().url()),
 });
 
 let _env: z.infer<typeof envSchema> | null = null;
