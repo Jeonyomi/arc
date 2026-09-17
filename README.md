@@ -92,5 +92,6 @@ Without `DATABASE_URL` every endpoint returns an explicit `uiOnly` empty state.
 ## Deployment
 
 - Vercel project linked to this repo; set `DATABASE_URL` (Production).
-- Local collector (Task Scheduler / cron) runs `pnpm sync` periodically to keep
-  Neon populated; the web app is read-only over that store.
+- Local collector (`ArcWatchSync` Task Scheduler task, hourly) runs `pnpm sync`
+  via a silent VBS wrapper to keep Neon populated; the web app is read-only over
+  that store. See [docs/operations.md](docs/operations.md).
